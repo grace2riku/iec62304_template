@@ -21,6 +21,10 @@ config:
   MD032: false
   # Emphasis used as heading: off — our templates use bold at the top for IDs
   MD036: false
+  # Blank lines around fenced code blocks: off — same rationale as MD022
+  MD031: false
+  # Multiple H1: off — combined plan/report templates use "第 I 部" and "第 II 部" as top-level dividers
+  MD025: false
 globs:
   - "**/*.md"
 ignores:
