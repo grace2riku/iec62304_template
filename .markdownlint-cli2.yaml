@@ -15,6 +15,12 @@ config:
   MD041: false
   # Fenced code block language — not every code block specifies one
   MD040: false
+  # Blank lines around headings: off — our dense templates place content immediately after headings
+  MD022: false
+  # Blank lines around lists: off — same rationale as MD022
+  MD032: false
+  # Emphasis used as heading: off — our templates use bold at the top for IDs
+  MD036: false
 globs:
   - "**/*.md"
 ignores:
