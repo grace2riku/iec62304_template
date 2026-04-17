@@ -45,8 +45,12 @@
 | CI-DOC-SMP | ソフトウェア保守計画書 | `6_software_maintenance_process/` | {{v}} | 承認済 |
 | CI-DOC-SRMP | ソフトウェアリスクマネジメント計画書 | `7_software_risk_management_process/` | {{v}} | 承認済 |
 | CI-DOC-SSC | ソフトウェア安全クラス決定記録 | `7_software_risk_management_process/` | {{v}} | 承認済 |
+| CI-DOC-RMF | リスクマネジメントファイル(ISO 14971) | `7_software_risk_management_process/` | {{v}} | 承認済 |
 | CI-DOC-SCMP | ソフトウェア構成管理計画書 | `8_software_configuration_management_process/` | {{v}} | 承認済 |
+| CI-DOC-CCB | CCB 運用規程 | `8_software_configuration_management_process/` | {{v}} | 承認済 |
+| CI-DOC-CRR | 変更要求台帳 | `8_software_configuration_management_process/` | {{v}} | 承認済 |
 | CI-DOC-SPRP | ソフトウェア問題解決手順書 | `9_software_problem_resolution_process/` | {{v}} | 承認済 |
+| CI-DOC-ACL | IEC 62304 監査チェックリスト | `compliance/` | {{v}} | 承認済 |
 
 ## 5. SOUP(Software of Unknown Provenance)
 
