@@ -122,14 +122,18 @@ jobs:
         run: |
           set -euo pipefail
           # Allow: {{YYYY-MM-DD}} placeholder; YYYY-MM-DD and YYYY-MM actual dates
-          # Flag: slash-separated dates (2026/04/17 or 04/17/2026) outside code blocks
-          # Note: this is a best-effort check; false positives may occur in version strings.
-          violations=$(grep -rn -E '\b[0-9]{4}/[0-9]{1,2}/[0-9]{1,2}\b' \
-            --include='*.md' \
-            --exclude-dir='.git' \
-            . || true)
+          # Flag:
+          #  (1) slash-separated 3-component dates containing a 4-digit year
+          #      (YYYY/MM/DD, DD/MM/YYYY, MM/DD/YYYY) — excludes pure fractions like 1/10
+          #  (2) English month-name natural-language dates (e.g., "April 17, 2026")
+          # Note: best-effort check; CLAUDE.md policy is authoritative.
+          slash_re='\b([0-9]{4}/[0-9]{1,2}/[0-9]{1,2}|[0-9]{1,2}/[0-9]{1,2}/[0-9]{4})\b'
+          month_re='\b(January|February|March|April|May|June|July|August|September|October|November|December) [0-9]{1,2},? [0-9]{4}\b'
+          v1=$(grep -rn -E "$slash_re" --include='*.md' --exclude-dir='.git' . || true)
+          v2=$(grep -rn -E "$month_re" --include='*.md' --exclude-dir='.git' . || true)
+          violations=$(printf '%s\n%s\n' "$v1" "$v2" | sed '/^$/d')
           if [[ -n "$violations" ]]; then
-            echo "::error::Slash-separated dates detected. Use ISO 8601 (YYYY-MM-DD) per CLAUDE.md."
+            echo "::error::Non-ISO date format detected. Use ISO 8601 (YYYY-MM-DD) per CLAUDE.md."
             echo "$violations"
             exit 1
           fi
