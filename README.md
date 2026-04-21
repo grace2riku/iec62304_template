@@ -113,6 +113,29 @@ CI 状態の確認は特に誤認の影響が大きいため、`gh run list --re
 
 `gh` CLI(認証済み)が必要です。スクリプトは冪等に動作し、既存ラベルは色・説明を更新します。
 
+### 3. CI 必須チェックの設定(Branch Protection)
+
+**安全クリティカルなクラス C 開発では、CI 失敗を放置したまま次ステップへ進行することは監査時のプロセス外進行リスク** となります(派生プロジェクトで軽微な lint エラーを 5 ステップ連続で見落とした事例あり)。`docs-check.yml` を Branch Protection Rule の required status checks に登録し、**CI が通らない限り PR をマージできない状態** にしてください。
+
+GitHub CLI が admin 権限で認証済みであれば、以下を実行するだけで設定できます。
+
+```bash
+./scripts/setup_branch_protection.sh                 # カレントリポジトリの main
+./scripts/setup_branch_protection.sh -R owner/repo   # 別リポジトリを指定
+./scripts/setup_branch_protection.sh -b develop      # 別ブランチを指定
+```
+
+このスクリプトは `docs-check.yml` の 4 ジョブ(構造・lint・リンク・日付書式)を必須チェックとして登録し、`main` への force push / 削除を禁止します。ソロ開発・小規模チームでも使えるよう、PR レビュー必須化と管理者への強制適用は **行いません**(必要に応じて GitHub Web UI で追加してください)。
+
+**手動で設定したい場合:** `Settings` → `Branches` → `Add rule` → `Branch name pattern: main` →「Require status checks to pass before merging」で上記 4 ジョブを指定してください。
+
+### 4. CI 失敗時の運用ルール(推奨)
+
+- CI 失敗は **次ステップ進行前に必ず修正** する(原因切り分け、該当ドキュメントの修正、再 push)
+- 複数ステップに渡る長期放置は、監査時に「プロセス外進行」と指摘されるリスクがある
+- `gh pr checks <PR番号>` / `gh run list --limit 5` で定期的に CI 状態を確認する
+- Slack / Microsoft Teams / メール通知を組織ごとに設定する(GitHub 公式 [notification docs](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/using-workflow-run-logs) 参照)
+
 ## 関連規格
 
 | 規格 | 用途 |
