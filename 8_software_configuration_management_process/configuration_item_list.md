@@ -49,6 +49,7 @@
 | CI-DOC-SCMP | ソフトウェア構成管理計画書 | `8_software_configuration_management_process/` | {{v}} | 承認済 |
 | CI-DOC-CCB | CCB 運用規程 | `8_software_configuration_management_process/` | {{v}} | 承認済 |
 | CI-DOC-CRR | 変更要求台帳 | `8_software_configuration_management_process/` | {{v}} | 承認済 |
+| CI-DOC-CIL | 構成アイテム一覧(本書、自己参照) | `8_software_configuration_management_process/` | {{v}} | 承認済 |
 | CI-DOC-SPRP | ソフトウェア問題解決手順書 | `9_software_problem_resolution_process/` | {{v}} | 承認済 |
 | CI-DOC-ACL | IEC 62304 監査チェックリスト | `compliance/` | {{v}} | 承認済 |
 
@@ -99,3 +100,14 @@
 | バージョン | 日付 | 変更内容 | 変更者 |
 |----------|------|---------|--------|
 | 0.1 | {{YYYY-MM-DD}} | 初版作成 | {{氏名}} |
+
+## 付録 A: CIL 更新時チェックリスト
+
+CIL を更新する際は、以下の順序で **全走査** すること。「今回変更する CI」だけに注力すると、自己参照(CI-DOC-CIL)や過去ステップで完成済みだが未反映の CI が漏れやすい。
+
+- [ ] 今回の CR で直接変更する CI の現行バージョン・状態を更新した
+- [ ] **自己参照(CI-DOC-CIL)の現行バージョンと状態を、本 CIL 自身の昇格後バージョンに更新した**
+- [ ] 過去ステップで完成したが CIL に未反映の CI(ソースコード・ドキュメント・SOUP・ツール・試験資産・成果バイナリ)が無いか §3〜§8 を全走査した
+- [ ] ベースライン履歴(§9)への追加が必要か判定し、必要なら追記した
+- [ ] 改訂履歴(§10)に今回の昇格エントリを追加した
+- [ ] 関連する CRR のエントリ・CCB 議事録と CI バージョンが整合していることを確認した
