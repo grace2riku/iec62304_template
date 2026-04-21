@@ -73,6 +73,30 @@ lychee --offline --include-fragments './**/*.md'
 
 ## 派生プロジェクトでの初期セットアップ
 
+### 1. `gh` のデフォルトリポジトリ設定(重要)
+
+本テンプレートを `git clone` → `.git` 削除 → `git init` → 新リポジトリとして派生運用する場合や、`upstream` リモートを残してフォーク運用する場合、`gh` コマンドのデフォルトリポジトリ解決が **upstream(本テンプレート側)を向いてしまう** ことがあります。この状態で `gh issue view 1` や `gh run list` を実行すると、本来見たい派生リポジトリではなく upstream の情報が返り、CI 状態や Issue 状況の **誤認に直結** します(監査時に「CI が通っていない」と誤判定する事故事例あり)。
+
+リポジトリ作成直後に、以下のいずれかを徹底してください。
+
+**(推奨)デフォルトリポジトリを明示的に固定する:**
+
+```bash
+gh repo set-default <owner>/<your-derived-repo>
+```
+
+**または、すべての `gh` コマンドで `--repo`(`-R`)を明示する:**
+
+```bash
+gh issue list  --repo <owner>/<your-derived-repo>
+gh run list    --repo <owner>/<your-derived-repo>
+gh pr checks N --repo <owner>/<your-derived-repo>
+```
+
+CI 状態の確認は特に誤認の影響が大きいため、`gh run list --repo <自リポジトリ>` を必ず明示することを推奨します。
+
+### 2. GitHub ラベルの作成
+
 派生プロジェクトで Issue テンプレート(問題報告 PRB / 変更要求 CR)を運用する場合、テンプレートの `labels` frontmatter で参照される GitHub ラベルが事前に存在する必要があります(未登録だと `gh issue create --label ...` がエラー終了)。リポジトリ作成直後に以下を実行してください。
 
 ```bash
