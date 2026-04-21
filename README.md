@@ -71,6 +71,24 @@ npx markdownlint-cli2 "**/*.md"
 lychee --offline --include-fragments './**/*.md'
 ```
 
+## 派生プロジェクトでの初期セットアップ
+
+派生プロジェクトで Issue テンプレート(問題報告 PRB / 変更要求 CR)を運用する場合、テンプレートの `labels` frontmatter で参照される GitHub ラベルが事前に存在する必要があります(未登録だと `gh issue create --label ...` がエラー終了)。リポジトリ作成直後に以下を実行してください。
+
+```bash
+./scripts/setup_labels.sh                   # カレントディレクトリのリポジトリに作成
+./scripts/setup_labels.sh -R owner/repo     # 別リポジトリを指定
+```
+
+作成されるラベル:
+
+| ラベル | 色 | 用途 |
+|-------|----|------|
+| `change-request` | `#0366d6` | 変更要求(SCMP / CCB に基づく)|
+| `problem-report` | `#d73a4a` | 問題報告(SPRP に基づく)|
+
+`gh` CLI(認証済み)が必要です。スクリプトは冪等に動作し、既存ラベルは色・説明を更新します。
+
 ## 関連規格
 
 | 規格 | 用途 |
